@@ -70,15 +70,29 @@ const typeDefs = gql`
     BLUE
   }
 
+  "The Todo type"
   type TodoItem {
+    "ID of the Todo"
     id: String!
+
+    "Date the Todo was created"
     createdDate: Date!
+
+    "An array of the todo's tags"
     tags: [String!]!
+
+    "Content of the todo"
     content: String!
+
+    "True if the todo is done"
     done: Boolean!
+
+    "Color of the todo, either 'RED', 'GREEN', or 'BLUE'. Can also be null."
     color: Color
   }
 
+  # Input types are special object types that allow you to pass objects as
+  # arguments to queries and mutations. They keep operation signatures clean.
   input MutateTodoInput {
     tags: [String!]
     content: String
