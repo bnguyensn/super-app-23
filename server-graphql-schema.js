@@ -61,6 +61,17 @@ exports.typeDefs = gql`
     color: Color
   }
 
+  """
+  Simple wrapper around our list of launches that contains a cursor to the last
+  item in the list. Pass this cursor to the launches query to fetch results
+  after these.
+  """
+  type TodoItemConnection {
+    cursor: String!
+    hasMore: Boolean!
+    todos: [TodoItem!]!
+  }
+
   # Input types are special object types that allow you to pass objects as
   # arguments to queries and mutations. They keep operation signatures clean.
   input MutateTodoInput {

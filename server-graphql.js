@@ -22,7 +22,13 @@ const server = new ApolloServer({
       colorAPI: new ColorAPI(),
     };
   },
+  context: async ({ req }) => {
+    const auth = (req.headers && req.headers.authorization) ?? '';
 
+    return {
+      user: { auth },
+    };
+  },
   // Testing
   // mocks: {
   //   Date: () => new Date(),
