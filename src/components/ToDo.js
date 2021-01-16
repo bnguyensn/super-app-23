@@ -23,15 +23,18 @@ const getBkgColor = (color) => {
 
 export default function ToDo({ id, createdDate, tags, content, done, color }) {
   return (
-    <div
+    <ul
       style={{
+        listStyleType: 'none',
         backgroundColor: getBkgColor(color),
       }}
     >
-      <div>Created date: {formatDate(new Date(createdDate))}</div>
-      <div>Content: {content}</div>
-      <div>Tags: {tags.join(',')}</div>
-      <div>Done: {formatDone(done)}</div>
-    </div>
+      <li>
+        Created date: {createdDate ? formatDate(new Date(createdDate)) : null}
+      </li>
+      <li>Content: {content}</li>
+      <li>Tags: {tags ? tags.join(', ') : ''}</li>
+      <li>Done: {formatDone(done)}</li>
+    </ul>
   );
 }
