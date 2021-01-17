@@ -1,0 +1,51 @@
+name: Web App | Build
+
+on:
+  push:
+    branches: main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: Cache directory
+        id: cache-directory
+        uses: actions/cache@v2
+        with:
+          # A list of files, directories, and wildcard patterns to cache and
+          # restore
+          # Note: not recommended to cache node_modules
+          path: |
+            ~/.npm
+          # Explicit key for restoring and saving the cache
+          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          # Ordered list of keys to use for restoring the cache if no cache hit
+          # occurred for key
+          restore-keys: |
+            ${{ runner.os }}-node-
+            ${{ runner.os }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build application
+        run: npm run build
+
+      - name: Run integration tests
+        run: npm test
+
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-artifact
+          path: |
+            build
+          retention-days: 5
