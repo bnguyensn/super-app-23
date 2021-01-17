@@ -42,6 +42,11 @@ jobs:
       - name: Build application
         run: npm run build
 
+      - name: Install Lighthouse CLI
+        run: npm i -g @lhci/cli
+      - name: Run Lighthouse tests
+      - run: lhci autorun --config=lighthouserc.js
+
       - name: Run integration tests
         run: npm test
 
